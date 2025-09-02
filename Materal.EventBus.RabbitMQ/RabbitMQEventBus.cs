@@ -171,7 +171,7 @@ namespace Materal.EventBus.RabbitMQ
                 else
                 {
                     Logger?.LogWarning($"事件[{routingKey}]处理失败,回滚消息,消息体：\r\n{message}");
-                    _cacheHelper.SetByAbsolute(args.RoutingKey, message, _options.CurrentValue.RetryInterval, DateTimeTypeEnum.Second);
+                    _cacheHelper.SetByAbsolute(args.RoutingKey, message, _options.CurrentValue.RetryInterval, DateTimeUnitEnum.SecondUnit);
                     await consumer.Channel.BasicNackAsync(args.DeliveryTag, false, true);
                 }
             }
