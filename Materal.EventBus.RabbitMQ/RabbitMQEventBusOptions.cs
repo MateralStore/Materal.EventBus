@@ -1,4 +1,4 @@
-﻿using Materal.Extensions;
+﻿using Materal.Utils.Extensions;
 
 namespace Materal.EventBus.RabbitMQ
 {

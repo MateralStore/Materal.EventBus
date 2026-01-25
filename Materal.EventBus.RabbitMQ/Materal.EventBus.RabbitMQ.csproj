@@ -11,6 +11,7 @@
 	  <PackageReference Include="RabbitMQ.Client" />
 	</ItemGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\..\Materal.Utils\Materal.Utils.Caching\Materal.Utils.Caching.csproj" />
 		<ProjectReference Include="..\Materal.EventBus.Abstraction\Materal.EventBus.Abstraction.csproj" />
 	</ItemGroup>
 </Project>

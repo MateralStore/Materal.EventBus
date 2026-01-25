@@ -1,6 +1,6 @@
-﻿using Materal.Abstractions;
-using Materal.Extensions;
-using Materal.Utils.Cache;
+﻿using Materal.Utils.Caching;
+using Materal.Utils.Enums;
+using Materal.Utils.Extensions;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Retry;
@@ -131,10 +131,7 @@ namespace Materal.EventBus.RabbitMQ
                     }
                     catch
                     {
-                        if (_consumerChannels.ContainsKey(queueName))
-                        {
-                            _consumerChannels.Remove(queueName, out _);
-                        }
+                        _consumerChannels.Remove(queueName, out _);
                         if (channel is not null)
                         {
                             if (channel.IsOpen)
@@ -171,7 +168,7 @@ namespace Materal.EventBus.RabbitMQ
                 else
                 {
                     Logger?.LogWarning($"事件[{routingKey}]处理失败,回滚消息,消息体：\r\n{message}");
-                    _cacheHelper.SetByAbsolute(args.RoutingKey, message, _options.CurrentValue.RetryInterval, DateTimeUnitEnum.SecondUnit);
+                    _cacheHelper.SetByAbsolute(args.RoutingKey, message, _options.CurrentValue.RetryInterval, DateTimeUnit.SecondUnit);
                     await consumer.Channel.BasicNackAsync(args.DeliveryTag, false, true);
                 }
             }

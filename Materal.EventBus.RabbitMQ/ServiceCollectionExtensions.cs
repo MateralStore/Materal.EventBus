@@ -1,67 +1,66 @@
-﻿using Materal.Utils.Extensions;
+﻿using Materal.Utils.Caching;
 
-namespace Materal.EventBus.RabbitMQ
+namespace Materal.EventBus.RabbitMQ;
+
+/// <summary>
+/// ServiceCollection扩展
+/// </summary>
+public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// ServiceCollection扩展
+    /// 添加事件总线
     /// </summary>
-    public static class ServiceCollectionExtensions
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddRabbitMQEventBus(this IServiceCollection services, IConfiguration configuration)
+        => services.AddRabbitMQEventBus(false, configuration, null);
+    /// <summary>
+    /// 添加事件总线
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <param name="handlerAssemblies"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddRabbitMQEventBus(this IServiceCollection services, IConfiguration configuration, params Assembly[] handlerAssemblies)
+        => services.AddRabbitMQEventBus(true, configuration, null, handlerAssemblies);
+    /// <summary>
+    /// 添加事件总线
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddRabbitMQEventBus(this IServiceCollection services, IConfiguration configuration, Action<RabbitMQEventBusOptions>? options)
+        => services.AddRabbitMQEventBus(false, configuration, options);
+    /// <summary>
+    /// 添加事件总线
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <param name="options"></param>
+    /// <param name="handlerAssemblies"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddRabbitMQEventBus(this IServiceCollection services, IConfiguration configuration, Action<RabbitMQEventBusOptions>? options, params Assembly[] handlerAssemblies)
+        => services.AddRabbitMQEventBus(true, configuration, options, handlerAssemblies);
+    /// <summary>
+    /// 添加事件总线
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="autoSubscribe">自动订阅标识</param>
+    /// <param name="configuration"></param>
+    /// <param name="options"></param>
+    /// <param name="handlerAssemblies"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddRabbitMQEventBus(this IServiceCollection services, bool autoSubscribe, IConfiguration configuration, Action<RabbitMQEventBusOptions>? options, params Assembly[] handlerAssemblies)
     {
-        /// <summary>
-        /// 添加事件总线
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddRabbitMQEventBus(this IServiceCollection services, IConfiguration configuration)
-            => services.AddRabbitMQEventBus(false, configuration, null);
-        /// <summary>
-        /// 添加事件总线
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <param name="handlerAssemblies"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddRabbitMQEventBus(this IServiceCollection services, IConfiguration configuration, params Assembly[] handlerAssemblies)
-            => services.AddRabbitMQEventBus(true, configuration, null, handlerAssemblies);
-        /// <summary>
-        /// 添加事件总线
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddRabbitMQEventBus(this IServiceCollection services, IConfiguration configuration, Action<RabbitMQEventBusOptions>? options)
-            => services.AddRabbitMQEventBus(false, configuration, options);
-        /// <summary>
-        /// 添加事件总线
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <param name="options"></param>
-        /// <param name="handlerAssemblies"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddRabbitMQEventBus(this IServiceCollection services, IConfiguration configuration, Action<RabbitMQEventBusOptions>? options, params Assembly[] handlerAssemblies)
-            => services.AddRabbitMQEventBus(true, configuration, options, handlerAssemblies);
-        /// <summary>
-        /// 添加事件总线
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="autoSubscribe">自动订阅标识</param>
-        /// <param name="configuration"></param>
-        /// <param name="options"></param>
-        /// <param name="handlerAssemblies"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddRabbitMQEventBus(this IServiceCollection services, bool autoSubscribe, IConfiguration configuration, Action<RabbitMQEventBusOptions>? options, params Assembly[] handlerAssemblies)
+        services.AddOptions();
+        services.Configure<RabbitMQEventBusOptions>(configuration);
+        services.AddMateralCachingUtils();
+        if (options is not null)
         {
-            services.AddOptions();
-            services.Configure<RabbitMQEventBusOptions>(configuration);
-            services.AddMateralUtils();
-            if (options is not null)
-            {
-                services.Configure(options);
-            }
-            return services.AddEventBus<RabbitMQEventBus>(autoSubscribe, handlerAssemblies);
+            services.Configure(options);
         }
+        return services.AddEventBus<RabbitMQEventBus>(autoSubscribe, handlerAssemblies);
     }
 }
