@@ -1,9 +1,8 @@
-﻿namespace Materal.EventBus.Abstraction
+﻿namespace Materal.EventBus.Abstraction;
+
+/// <summary>
+/// 事件
+/// </summary>
+public interface IEvent
 {
-    /// <summary>
-    /// 事件
-    /// </summary>
-    public interface IEvent
-    {
-    }
 }
