@@ -1,4 +1,4 @@
-﻿namespace Materal.EventBus.RabbitMQ
+namespace Materal.EventBus.RabbitMQ
 {
     /// <summary>
     /// 队列名称特性

@@ -1,4 +1,4 @@
-﻿namespace Materal.EventBus.RabbitMQ
+namespace Materal.EventBus.RabbitMQ
 {
     /// <summary>
     /// 订阅信息

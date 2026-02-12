@@ -1,4 +1,4 @@
-﻿namespace Materal.EventBus.Abstraction
+namespace Materal.EventBus.Abstraction
 {
     /// <summary>
     /// 事件处理器

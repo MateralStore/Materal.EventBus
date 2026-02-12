@@ -1,4 +1,4 @@
-﻿using Materal.EventBus.RabbitMQ;
+using Materal.EventBus.RabbitMQ;
 using Microsoft.Extensions.Logging;
 using System.Collections;
 using System.Collections.Concurrent;

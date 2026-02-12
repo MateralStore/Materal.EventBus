@@ -1,4 +1,4 @@
-﻿namespace Materal.EventBus.RabbitMQ
+namespace Materal.EventBus.RabbitMQ
 {
     /// <summary>
     /// RabbitMQ事件处理器

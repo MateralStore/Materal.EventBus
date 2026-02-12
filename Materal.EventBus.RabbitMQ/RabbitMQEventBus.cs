@@ -1,4 +1,4 @@
-﻿using Materal.Utils.Caching;
+using Materal.Utils.Caching;
 using Materal.Utils.Enums;
 using Materal.Utils.Extensions;
 using Microsoft.Extensions.Options;

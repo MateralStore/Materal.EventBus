@@ -1,4 +1,4 @@
-﻿using Materal.EventBus.Abstraction;
+using Materal.EventBus.Abstraction;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
